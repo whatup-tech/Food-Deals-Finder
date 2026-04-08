@@ -224,33 +224,6 @@ curl "http://localhost:8080/api/deals/stats"
 
 ---
 
-## Interview Talking Points
 
-**"Walk me through your project."**
-> "It's a food deal aggregator that scrapes deals and ranks them by a value score — not just discount %. The score weighs actual rupee savings, affordability, and freshness. A 40% off on a ₹300 meal scores higher than 70% off on a ₹2000 meal."
 
-**"Why did you build a scoring algorithm instead of just sorting by discount %?"**
-> "Discount % alone is misleading. A restaurant showing 70% off might have inflated base prices. Ranking by rupee savings and final price gives a more honest picture of value to the user."
 
-**"How does the scraper work?"**
-> "I use JSoup to parse HTML from public offer pages — no private API needed. I extract discount %, restaurant names, and price info using regex and CSS selectors. The simulated data mode lets the app run offline for demos."
-
-**"How do you handle stale data?"**
-> "Deals older than 24 hours are marked inactive by a scheduled job. The freshness factor in the score also penalises older deals before they're removed."
-
-**"What's the most interesting JPA query in the project?"**
-> "The digest query — it fetches top N deals for a city filtered by a subscriber's preferred cuisines, within a time window, ordered by value score. It uses JPQL with a dynamic cuisine list and a LIMIT clause."
-
-**"How would you scale this?"**
-> "Current bottleneck is single-threaded scraping. I'd parallelize scrapers with a thread pool, add Redis to cache top deals per city, and move the email digest to an async queue (Kafka or SQS) to handle thousands of subscribers without blocking."
-
----
-
-## Possible Extensions
-
-- Add more real scrapers (Swiggy, restaurant websites)
-- Expose a `/api/deals/top-of-the-day` endpoint
-- Add user ratings for deals ("was this actually good?")
-- Build a simple React frontend with a deal card UI
-- Deploy to Railway or Render (free tier)
->>>>>>> 33880d0 (Initial commit)
